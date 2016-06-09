@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A221A588-4B72-481A-B715-46BE8F557DF7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CurrencyExchange.Repository</RootNamespace>
+    <AssemblyName>CurrencyExchange.Repository</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FluentScheduler, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b76503528a14ebd1, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentScheduler.4.1.1\lib\net40\FluentScheduler.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Database\CurrencyExchangeEntity.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CurrencyExchangeEntity.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\CurrencyExchangeEntity.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CurrencyExchangeEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\CurrencyExchangeEntity.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CurrencyExchangeEntity.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Database\CurrencyRate.cs">
+      <DependentUpon>CurrencyExchangeEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FetchAndSaveRates.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rates.cs" />
+    <Compile Include="Repositories\RateRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Database\CurrencyExchangeEntity.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CurrencyExchangeEntity.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="Database\CurrencyExchangeEntity.edmx.diagram">
+      <DependentUpon>CurrencyExchangeEntity.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Database\CurrencyExchangeEntity.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CurrencyExchangeEntity.edmx</DependentUpon>
+      <LastGenOutput>CurrencyExchangeEntity.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Database\CurrencyExchangeEntity.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CurrencyExchangeEntity.edmx</DependentUpon>
+      <LastGenOutput>CurrencyExchangeEntity.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CurrencyExchange.Common\CurrencyExchange.Common.csproj">
+      <Project>{899b3126-9a29-4713-8067-2ca17b936b4b}</Project>
+      <Name>CurrencyExchange.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CurrencyExchange.DomainObject\CurrencyExchange.DomainObject.csproj">
+      <Project>{1e1c6b56-10f0-4ea9-a589-7d7e7f8bc50e}</Project>
+      <Name>CurrencyExchange.DomainObject</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CurrencyExchange.FixerIo\CurrencyExchange.FixerIo.csproj">
+      <Project>{1d640585-51a3-4f8d-8daa-9e5588b3552f}</Project>
+      <Name>CurrencyExchange.FixerIo</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
