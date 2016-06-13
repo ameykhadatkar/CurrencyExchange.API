@@ -12,6 +12,10 @@ namespace CurrencyExchange.Repository
     public class FetchAndSaveRates : Registry
     {
         RateRepository rateRepository;
+
+        /// <summary>
+        /// This is the constructor which initializes the rate daemon
+        /// </summary>
         public FetchAndSaveRates()
         {
             rateRepository = new RateRepository();
@@ -23,11 +27,11 @@ namespace CurrencyExchange.Repository
 
         }
 
+        /// <summary>
+        /// This method gets the rates from FixerIO tool and makes a call to the repository to save the values to the database
+        /// </summary>
         public void StartWork()
         {
-            //HostingEnvironment.QueueBackgroundWorkItem(cancellationToken =>
-            //{
-            // Get rates
             var newRates = FixerIo.FixerIo.GetCurrencyExchangeRates();
 
             var currencyCodesSupported = AppConfiguration.CurrenciesNeeded.Split(',');
@@ -37,7 +41,6 @@ namespace CurrencyExchange.Repository
                 var value = newRates.Rates.GetType().GetProperty(currencyCode).GetValue(newRates.Rates, null);
                 rateRepository.SaveCurrencyRates(currencyCode, Convert.ToDouble(value));
             }
-            //});
         }
     }
 }

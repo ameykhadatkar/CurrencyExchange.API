@@ -11,18 +11,39 @@ namespace CurrencyExchange.Repository
 {
     public class Rates
     {
+        /// <summary>
+        /// database repository object
+        /// </summary>
         RateRepository repository;
 
+        /// <summary>
+        /// Construtor which initializes the repository
+        /// </summary>
         public Rates()
         {
             repository = new RateRepository();
         }
 
+        /// <summary>
+        /// This method returns the rate details based on the currency code and the amount
+        /// </summary>
+        /// <param name="requestData">This contains the parameters sent by the client in the request body</param>
+        /// <returns>Response object with converted rate details for a currency code to INR</returns>
         public Response GetRates(string requestData)
         {
             var postedData = JsonConvert.DeserializeObject<RatesRequest>(requestData);
             try
             {
+                postedData = postedData ?? new RatesRequest();
+                if (string.IsNullOrWhiteSpace(postedData.CurrencyCode))
+                {
+                    postedData.CurrencyCode = "USD";
+                }
+                if (postedData.Amount == null)
+                {
+                    postedData.Amount = 1;
+                }
+
                 var acceptedCurrencyCodes = AppConfiguration.CurrenciesNeeded.Split(',');
                 if (!acceptedCurrencyCodes.Contains(postedData.CurrencyCode))
                 {
@@ -34,10 +55,10 @@ namespace CurrencyExchange.Repository
                 }
                 var currentRate = repository.GetCurrencyRates(postedData.CurrencyCode);
 
-                var requestedRate = (1 / currentRate) * postedData.Amount;
+                var requestedRate = (1 / currentRate) * postedData.Amount.Value;
                 var response = new Response
                 {
-                    Amount = postedData.Amount,
+                    Amount = postedData.Amount.Value,
                     ConversionRate = currentRate,
                     Err = AppConfiguration.SuccessMessage,
                     ReturnCode = 1,
@@ -52,7 +73,7 @@ namespace CurrencyExchange.Repository
             {
                 var response = new Response
                 {
-                    Amount = postedData.Amount,
+                    Amount = postedData.Amount.Value,
                     Err = ex.Message,
                     ReturnCode = 2,
                     SourceCurrency = postedData.CurrencyCode,

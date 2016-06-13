@@ -33,7 +33,11 @@ namespace CurrencyExchange.Repository
             }
         }
 
-
+        /// <summary>
+        /// This method saves the currency rate for the sent currencyCode
+        /// </summary>
+        /// <param name="currencyCode">currency code</param>
+        /// <param name="rate">rate of the above mentioned currency code in comparison with INR</param>
         public void SaveCurrencyRates(string currencyCode, double rate)
          {
             using (var db = new CurrencyExchangeEntities())

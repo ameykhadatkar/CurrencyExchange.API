@@ -13,6 +13,6 @@ namespace CurrencyExchange.DomainObject
         public string CurrencyCode { get; set; }
 
         [JsonProperty(PropertyName = "amount")]
-        public double Amount { get; set; }
+        public double? Amount { get; set; }
     }
 }
